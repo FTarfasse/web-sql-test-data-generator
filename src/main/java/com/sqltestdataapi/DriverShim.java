@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 public class DriverShim implements Driver {
 
-    private Driver driver;
+    private final Driver driver;
 
     public DriverShim(Driver driver) {
         this.driver = driver;
@@ -14,7 +14,7 @@ public class DriverShim implements Driver {
 
     @Override
     public Connection connect(String url, Properties info) throws SQLException {
-        return this.driver.connect( url, info);
+        return this.driver.connect(url, info);
     }
 
     @Override
