@@ -8,10 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class ApiApplication {
-/*
-	@Value("${server.port}")
-	private String port;
-*/
 
 	private static final Logger log = LoggerFactory.getLogger(ApiApplication.class);
 
