@@ -8,19 +8,19 @@ import org.springframework.beans.factory.annotation.Value;
 public class DatabaseConfig {
 
     @Value("${spring.datasource.url}")
-    String datasourceUrl;
+    private String datasourceUrl;
 
     @Value("${spring.dataSource.driverClassName}")
-    String driverClassName;
-
-    @Value("${spring.datasource.url}")
-    String url;
+    private String driverClassName;
 
     @Value("${spring.datasource.username}")
-    String user;
+    private String user;
 
     @Value("${spring.datasource.password}")
-    String password;
+    private String password;
+
+    @Value("${driver-path}")
+    private String driverPath;
 
     public String getDatasourceUrl() {
         return datasourceUrl;
@@ -30,16 +30,16 @@ public class DatabaseConfig {
         return driverClassName;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
     public String getUser() {
         return user;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public String getDriverPath() {
+        return driverPath;
     }
 
     /*
