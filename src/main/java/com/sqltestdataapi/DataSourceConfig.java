@@ -19,12 +19,6 @@ import java.sql.SQLException;
 @Configuration
 public class DataSourceConfig {
 
-    private final String port;
-
-    public DataSourceConfig(Environment environment) {
-        this.port = environment.getProperty("${server.port}");
-    }
-
     @Bean
     public Object createTable(DataSource dataSource) {
         SqlExecutor sqlExecutor = new SqlExecutor(dataSource);
