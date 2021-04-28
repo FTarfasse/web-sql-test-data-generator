@@ -1,7 +1,7 @@
 package com.sqltestdataapi.services;
 
-import org.quickperf.sqldata.SqlTestDataGenerator;
 import org.springframework.stereotype.Service;
+import org.stdg.SqlTestDataGenerator;
 
 import javax.sql.DataSource;
 
@@ -15,11 +15,8 @@ public class TestDataGeneratorService {
     }
 
     public String generateTestQuery(String query) {
-        // DataSource dataSource = DataSourceBuilder.INSTANCE.build("jdbc:h2:mem:test", "power", "ranger");
         SqlTestDataGenerator sqlTestDataGenerator = SqlTestDataGenerator.buildFrom(dataSource);
-        String script = sqlTestDataGenerator.generateDatasetScriptFor(query);
-
-        return script;
+        return sqlTestDataGenerator.generateInsertScriptFor(query);
     }
 
 }
