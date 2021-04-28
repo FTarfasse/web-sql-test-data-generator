@@ -39,19 +39,17 @@ public class DataSourceConfig {
 
         try {
             configDriver(databaseConfig);
+
+            HikariConfig hikariConfig = new HikariConfig();
+            hikariConfig.setJdbcUrl(databaseConfig.getDatasourceUrl());
+            hikariConfig.setUsername(databaseConfig.getUser());
+            hikariConfig.setPassword(databaseConfig.getPassword());
+            hikariConfig.setDriverClassName(databaseConfig.getDriverClassName());
+            return new HikariDataSource(hikariConfig);
         } catch (Exception e) {
-            LOGGER.error("Database configuration error", e);
+            LOGGER.error("Database configuration error");
             throw e;
         }
-
-        HikariConfig hikariConfig = new HikariConfig();
-
-        hikariConfig.setJdbcUrl(databaseConfig.getDatasourceUrl());
-        hikariConfig.setUsername(databaseConfig.getUser());
-        hikariConfig.setPassword(databaseConfig.getPassword());
-        hikariConfig.setDriverClassName(databaseConfig.getDriverClassName());
-
-        return new HikariDataSource(hikariConfig);
     }
 
     private void configDriver(DatabaseConfig databaseConfig) throws ClassNotFoundException, SQLException, MalformedURLException, IllegalAccessException, InstantiationException {
