@@ -53,7 +53,9 @@ public class DataSourceConfig {
     }
 
     private void configDriver(DatabaseConfig databaseConfig) throws ClassNotFoundException, SQLException, MalformedURLException, IllegalAccessException, InstantiationException {
-        URL url = new URL(databaseConfig.getDriverPath());
+        String driverPath = databaseConfig.getDriverPath();
+        String urlSpecification = "jar:file:/" + driverPath + "!/";
+        URL url = new URL(urlSpecification);
         // dynamic load of the db driver
         String className = databaseConfig.getDriverClassName();
         URLClassLoader ucl = URLClassLoader.newInstance(new URL[]{url});

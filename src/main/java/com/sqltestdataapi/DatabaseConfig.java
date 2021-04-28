@@ -1,8 +1,7 @@
 package com.sqltestdataapi;
 
-import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
-
+import org.springframework.stereotype.Component;
 
 @Component
 public class DatabaseConfig {
@@ -41,8 +40,5 @@ public class DatabaseConfig {
     public String getDriverPath() {
         return driverPath;
     }
-
-    /*
-*/
 
 }
