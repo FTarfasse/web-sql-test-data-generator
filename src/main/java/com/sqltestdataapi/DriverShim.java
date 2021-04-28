@@ -4,6 +4,9 @@ import java.sql.*;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+/**
+ * Inspiration from https://www.kfu.com/~nsayer/Java/dyn-jdbc.html
+ */
 public class DriverShim implements Driver {
 
     private Driver driver;
