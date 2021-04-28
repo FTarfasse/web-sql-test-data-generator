@@ -44,7 +44,7 @@ public class DataSourceConfig {
             hikariConfig.setJdbcUrl(databaseConfig.getDatasourceUrl());
             hikariConfig.setUsername(databaseConfig.getUser());
             hikariConfig.setPassword(databaseConfig.getPassword());
-            hikariConfig.setDriverClassName(databaseConfig.getDriverClassName());
+            hikariConfig.setDriverClassName(DriverShim.class.getCanonicalName());
             return new HikariDataSource(hikariConfig);
         } catch (Exception e) {
             LOGGER.error("Database configuration error");

@@ -16,7 +16,8 @@ public class TestDataGeneratorService {
 
     public String generateTestQuery(String query) {
         SqlTestDataGenerator sqlTestDataGenerator = SqlTestDataGenerator.buildFrom(dataSource);
-        return sqlTestDataGenerator.generateInsertScriptFor(query);
+        String insertScript = sqlTestDataGenerator.generateInsertScriptFor(query);
+        return insertScript;
     }
 
 }

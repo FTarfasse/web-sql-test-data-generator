@@ -6,7 +6,11 @@ import java.util.logging.Logger;
 
 public class DriverShim implements Driver {
 
-    private final Driver driver;
+    private Driver driver;
+
+    // No arg contructor required by Hikari
+    public DriverShim() {
+    }
 
     public DriverShim(Driver driver) {
         this.driver = driver;
