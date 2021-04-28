@@ -2,11 +2,10 @@ package com.sqltestdataapi;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 import java.net.MalformedURLException;
@@ -18,6 +17,8 @@ import java.sql.SQLException;
 
 @Configuration
 public class DataSourceConfig {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApiApplication.class);
 
     @Bean
     public Object createTable(DataSource dataSource) {
@@ -35,7 +36,14 @@ public class DataSourceConfig {
 
     @Bean
     public DataSource dataSource(DatabaseConfig databaseConfig) throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException, MalformedURLException {
-        configDriver(databaseConfig);
+
+        try {
+            configDriver(databaseConfig);
+        } catch (Exception e) {
+            LOGGER.error("Database configuration error", e);
+            throw e;
+        }
+
         HikariConfig hikariConfig = new HikariConfig();
 
         hikariConfig.setJdbcUrl(databaseConfig.getDatasourceUrl());
@@ -53,6 +61,8 @@ public class DataSourceConfig {
         URLClassLoader ucl = URLClassLoader.newInstance(new URL[]{url});
         Driver driver = (Driver) Class.forName(className, true, ucl).newInstance();
         DriverManager.registerDriver(new DriverShim(driver));
+
+        // Necessary?
         DriverManager.getConnection(databaseConfig.getDatasourceUrl(), databaseConfig.getUser(), databaseConfig.getPassword());
     }
 
