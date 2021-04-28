@@ -59,9 +59,6 @@ public class DataSourceConfig {
         URLClassLoader ucl = URLClassLoader.newInstance(new URL[]{url});
         Driver driver = (Driver) Class.forName(className, true, ucl).newInstance();
         DriverManager.registerDriver(new DriverShim(driver));
-
-        // Necessary?
-        DriverManager.getConnection(databaseConfig.getDatasourceUrl(), databaseConfig.getUser(), databaseConfig.getPassword());
     }
 
 }
