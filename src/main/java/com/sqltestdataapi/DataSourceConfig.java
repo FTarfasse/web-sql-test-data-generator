@@ -21,20 +21,6 @@ public class DataSourceConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiApplication.class);
 
     @Bean
-    public Object createTable(DataSource dataSource) {
-        SqlExecutor sqlExecutor = new SqlExecutor(dataSource);
-        sqlExecutor.execute("CREATE TABLE GuitarHero\n" +
-                "(\n" +
-                "    id         INT AUTO_INCREMENT PRIMARY KEY,\n" +
-                "    first_name VARCHAR(250) NOT NULL,\n" +
-                "    last_name  VARCHAR(250) NOT NULL\n" +
-                ")");
-        sqlExecutor.execute("INSERT INTO GUITARHERO VALUES (1, 'Tosin', 'Abasi')");
-
-        return new Object();
-    }
-
-    @Bean
     public DataSource dataSource(DatabaseConfig databaseConfig) throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException, MalformedURLException {
 
         try {
