@@ -38,8 +38,8 @@
                 </dependency>
         -->
         <dependency>
-            <groupId>org.quickperf.sqldata</groupId>
-            <artifactId>test-data-generator</artifactId>
+            <groupId>org.quickperf</groupId>
+            <artifactId>sql-test-data-generator</artifactId>
             <version>0.1-SNASPHOT</version>
         </dependency>
     </dependencies>

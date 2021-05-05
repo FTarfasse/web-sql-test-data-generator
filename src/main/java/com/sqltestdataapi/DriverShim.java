@@ -4,9 +4,17 @@ import java.sql.*;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+/**
+ * Inspiration from https://www.kfu.com/~nsayer/Java/dyn-jdbc.html
+ * with the authorization of Nick Sayer.
+ */
 public class DriverShim implements Driver {
 
-    private final Driver driver;
+    private Driver driver;
+
+    // No arg contructor required by Hikari
+    public DriverShim() {
+    }
 
     public DriverShim(Driver driver) {
         this.driver = driver;

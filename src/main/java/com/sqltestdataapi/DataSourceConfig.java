@@ -2,11 +2,10 @@ package com.sqltestdataapi;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 import java.net.MalformedURLException;
@@ -19,47 +18,35 @@ import java.sql.SQLException;
 @Configuration
 public class DataSourceConfig {
 
-    private final String port;
-
-    public DataSourceConfig(Environment environment) {
-        this.port = environment.getProperty("${server.port}");
-    }
-
-    @Bean
-    public Object createTable(DataSource dataSource) {
-        SqlExecutor sqlExecutor = new SqlExecutor(dataSource);
-        sqlExecutor.execute("CREATE TABLE GuitarHero\n" +
-                "(\n" +
-                "    id         INT AUTO_INCREMENT PRIMARY KEY,\n" +
-                "    first_name VARCHAR(250) NOT NULL,\n" +
-                "    last_name  VARCHAR(250) NOT NULL\n" +
-                ")");
-        sqlExecutor.execute("INSERT INTO GUITARHERO VALUES (1, 'Tosin', 'Abasi')");
-
-        return new Object();
-    }
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApiApplication.class);
 
     @Bean
     public DataSource dataSource(DatabaseConfig databaseConfig) throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException, MalformedURLException {
-        configDriver(databaseConfig);
-        HikariConfig hikariConfig = new HikariConfig();
 
-        hikariConfig.setJdbcUrl(databaseConfig.getDatasourceUrl());
-        hikariConfig.setUsername(databaseConfig.getUser());
-        hikariConfig.setPassword(databaseConfig.getPassword());
-        hikariConfig.setDriverClassName(databaseConfig.getDriverClassName());
+        try {
+            configDriver(databaseConfig);
 
-        return new HikariDataSource(hikariConfig);
+            HikariConfig hikariConfig = new HikariConfig();
+            hikariConfig.setJdbcUrl(databaseConfig.getDatasourceUrl());
+            hikariConfig.setUsername(databaseConfig.getUser());
+            hikariConfig.setPassword(databaseConfig.getPassword());
+            hikariConfig.setDriverClassName(DriverShim.class.getCanonicalName());
+            return new HikariDataSource(hikariConfig);
+        } catch (Exception e) {
+            LOGGER.error("Database configuration error");
+            throw e;
+        }
     }
 
     private void configDriver(DatabaseConfig databaseConfig) throws ClassNotFoundException, SQLException, MalformedURLException, IllegalAccessException, InstantiationException {
-        URL url = new URL(databaseConfig.getDriverPath());
+        String driverPath = databaseConfig.getDriverPath();
+        String urlSpecification = "jar:file:/" + driverPath + "!/";
+        URL url = new URL(urlSpecification);
         // dynamic load of the db driver
         String className = databaseConfig.getDriverClassName();
         URLClassLoader ucl = URLClassLoader.newInstance(new URL[]{url});
         Driver driver = (Driver) Class.forName(className, true, ucl).newInstance();
         DriverManager.registerDriver(new DriverShim(driver));
-        DriverManager.getConnection(databaseConfig.getDatasourceUrl(), databaseConfig.getUser(), databaseConfig.getPassword());
     }
 
 }
