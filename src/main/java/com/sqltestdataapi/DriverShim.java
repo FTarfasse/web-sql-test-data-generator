@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 /**
  * Inspiration from https://www.kfu.com/~nsayer/Java/dyn-jdbc.html
+ * with the authorization of Nick Sayer.
  */
 public class DriverShim implements Driver {
 
