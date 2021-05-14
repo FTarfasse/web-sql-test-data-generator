@@ -31,12 +31,14 @@
             <artifactId>HikariCP</artifactId>
             <version>3.4.5</version>
         </dependency>
-        <!--
-                <dependency>
-                    <groupId>com.h2database</groupId>
-                    <artifactId>h2</artifactId>
-                </dependency>
-        -->
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.200</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.quickperf</groupId>
             <artifactId>sql-test-data-generator</artifactId>
@@ -47,10 +49,27 @@
     <build>
         <plugins>
             <plugin>
+
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>demo</id>
+            <properties>
+                <driver-path-value></driver-path-value>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <version>1.4.200</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
 </project>
