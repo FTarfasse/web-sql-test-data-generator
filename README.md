@@ -8,4 +8,4 @@ To launch the application in the demo mode:
 * Use _demo_ Maven profile
 * Enable _demo_ Spring profile (-Dspring.profiles.active=demo)
 
-To configure the application with your database, complete the [application.properties file](/application.properties).
+To configure the application with your database, complete the [application.properties file](src/main/resources/application.properties).
