@@ -30,7 +30,7 @@ import java.sql.SQLException;
 @Configuration
 public class DataSourceConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApiApplication.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataSourceConfig.class);
 
     @Bean
     public DataSource dataSource(DatabaseConfig databaseConfig) throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException, MalformedURLException {
