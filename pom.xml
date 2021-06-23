@@ -70,9 +70,6 @@
     <profiles>
         <profile>
             <id>demo</id>
-            <properties>
-                <driver-path-value></driver-path-value>
-            </properties>
             <dependencies>
                 <dependency>
                     <groupId>com.h2database</groupId>
@@ -84,6 +81,14 @@
     </profiles>
 
     <build>
+
+
+            <resources>
+                <resource>
+                    <directory>src/main/resources</directory>
+                    <filtering>true</filtering>
+                </resource>
+            </resources>
         <plugins>
             <plugin>
                 <groupId>com.mycila</groupId>
